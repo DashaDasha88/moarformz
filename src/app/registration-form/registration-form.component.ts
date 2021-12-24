@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { PasswordValidator } from './shared/password.validator';
 import { forbiddenNameValidator } from './shared/username.validator';
 
@@ -20,6 +20,13 @@ export class RegistrationFormComponent implements OnInit {
     return this.registrationForm.get('email');
   }
 
+  get alternateEmails() {
+    return this.registrationForm.get('alternateEmails') as FormArray;
+  }
+
+  addAlternateEmail() {
+    this.alternateEmails.push(this.fb.control(''));
+  }
 
   constructor(private fb: FormBuilder) {}
 
@@ -41,7 +48,8 @@ export class RegistrationFormComponent implements OnInit {
         city: [''],
         province: [''],
         postalCode: ['']
-      })
+      }),
+      alternateEmails: this.fb.array([]) //an array for dynamic form controls
     }, {validator: PasswordValidator}); //because the cross-field validator acts on the form group, not the individual controls
 
     this.registrationForm.get('subscribe')?.valueChanges //valueChanges property returns an observable
