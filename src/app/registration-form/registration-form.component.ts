@@ -28,6 +28,14 @@ export class RegistrationFormComponent implements OnInit {
     this.alternateEmails.push(this.fb.control(''));
   }
 
+  get alternatePhone() {
+    return this.registrationForm.get('alternatePhone') as FormArray;
+  }
+
+  addAlternatePhone() {
+    this.alternatePhone.push(this.fb.control(''));
+  }
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -42,6 +50,7 @@ export class RegistrationFormComponent implements OnInit {
         ]],
       email: [''],
       subscribe: [false],
+      phone: [''],
       password: [''],
       confirmPassword: [''],
       address: this.fb.group({
@@ -49,7 +58,8 @@ export class RegistrationFormComponent implements OnInit {
         province: [''],
         postalCode: ['']
       }),
-      alternateEmails: this.fb.array([]) //an array for dynamic form controls
+      alternateEmails: this.fb.array([]), //an array for dynamic form controls
+      alternatePhone: this.fb.array([])
     }, {validator: PasswordValidator}); //because the cross-field validator acts on the form group, not the individual controls
 
     this.registrationForm.get('subscribe')?.valueChanges //valueChanges property returns an observable
