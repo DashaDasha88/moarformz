@@ -16,6 +16,11 @@ export class RegistrationFormComponent implements OnInit {
     return this.registrationForm.get('userName');
   }
 
+  get email() {
+    return this.registrationForm.get('email');
+  }
+
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -38,6 +43,17 @@ export class RegistrationFormComponent implements OnInit {
         postalCode: ['']
       })
     }, {validator: PasswordValidator}); //because the cross-field validator acts on the form group, not the individual controls
+
+    this.registrationForm.get('subscribe')?.valueChanges //valueChanges property returns an observable
+      .subscribe(checkedValue => {
+        const email = this.registrationForm.get('email');
+        if (checkedValue) {
+          email?.setValidators(Validators.required);
+        } else {
+          email?.clearValidators();
+        }
+        email?.updateValueAndValidity();
+      })
   }
 
   // registrationForm = new FormGroup({
