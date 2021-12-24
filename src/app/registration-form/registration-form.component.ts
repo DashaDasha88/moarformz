@@ -12,7 +12,12 @@ export class RegistrationFormComponent {
   constructor(private fb: FormBuilder) {}
 
   registrationForm = this.fb.group({
-    userName: ['', [Validators.required, Validators.minLength(3), forbiddenNameValidator(/password/), forbiddenNameValidator(/admin/)]],
+    userName: ['',
+      [Validators.required,
+        Validators.minLength(3),
+        forbiddenNameValidator(/password/),
+        forbiddenNameValidator(/admin/)
+      ]],
     password: [''],
     confirmPassword: [''],
     address: this.fb.group({
